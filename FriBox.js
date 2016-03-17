@@ -20,6 +20,11 @@ function posredujNapako200(odgovor) {
   odgovor.write('Datoteka izbrisana');
   odgovor.end();
 }
+function posredujNapako409(odgovor) {
+  odgovor.writeHead(409, {'Content-Type': 'text/plain'});
+  odgovor.write('HTTP 409');
+  odgovor.end();
+}
 function posredujNapako500(odgovor) {
   odgovor.writeHead(500, {'Content-Type': 'text/plain'});
   odgovor.write('Napaka 500: Prislo je do napake streznika.');
@@ -115,22 +120,37 @@ function posredujSeznamDatotek(odgovor) {
 }
 
 function naloziDatoteko(zahteva, odgovor) {
+
+
+
     var form = new formidable.IncomingForm();
- 
+    
     form.parse(zahteva, function(napaka, polja, datoteke) {
         util.inspect({fields: polja, files: datoteke});
     });
- 
+    
     form.on('end', function(fields, files) {
         var zacasnaPot = this.openedFiles[0].path;
         var datoteka = this.openedFiles[0].name;
-        fs.copy(zacasnaPot, dataDir + datoteka, function(napaka) {  
-            if (napaka) {
-                //Posreduj napako
-                posredujNapako404(odgovor);
-            } else {
-                posredujOsnovnoStran(odgovor);        
+        
+        fs.exists(datoteka, function(datotekaObstaja){
+            if(!datotekaObstaja)
+                posredujNapako409(odgovor);
+            else{
+               fs.copy(zacasnaPot, dataDir + datoteka, function(napaka) {  
+                    if (napaka) {
+                        //Posreduj napako
+                        posredujNapako404(odgovor);
+                    } else {
+                        posredujOsnovnoStran(odgovor);        
+                    }
+                }); 
             }
         });
+        
+
     });
+        
+    
+
 }
