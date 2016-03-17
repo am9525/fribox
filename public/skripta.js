@@ -36,13 +36,14 @@ window.addEventListener('load', function() {
 						velikost = Math.floor(velikost/1048576);
 						enota="MB";
 					}
-					
+					//dodajanje gumba
 					datotekeHTML.innerHTML += " \
 						<div class='datoteka senca rob'> \
 							<div class='naziv_datoteke'> " + datoteka.datoteka + "  (" + velikost + " " + enota + ") </div> \
 							<div class='akcije'> \
 							| <span><a href='/prenesi/" + datoteka.datoteka + "' target='_self'>Prenesi</a></span> \
-							| <span akcija='brisi' datoteka='"+ datoteka.datoteka +"'>Izbriši</span> </div> \
+							| <span akcija='brisi' datoteka='"+ datoteka.datoteka +"'>Izbriši</span> \
+							| <span><a href='/poglej/" + datoteka.datoteka + "' target='_self'>Poglej</a></span></div> \
 					    </div>";	
 				}
 				
