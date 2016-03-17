@@ -42,8 +42,12 @@ window.addEventListener('load', function() {
 				ugasniCakanje();
 			}
 		};
+		//sem dodal GET request
+		xhttp.open("GET", "/datoteke", true);
+		xhttp.send();
 	}
-	
+	//poklicemo funkcijo
+	pridobiSeznamDatotek();
 	var brisi = function(event) {
 		prizgiCakanje();
 		var xhttp = new XMLHttpRequest();
@@ -62,3 +66,4 @@ window.addEventListener('load', function() {
 	}
 
 });
+document.ready

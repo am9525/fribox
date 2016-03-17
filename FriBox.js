@@ -26,7 +26,14 @@ var streznik = http.createServer(function(zahteva, odgovor) {
        posredujStaticnoVsebino(odgovor, './public' + zahteva.url, "");
    }
 });
+// Za združljivost razvoja na lokalnem računalniku ali v Cloud9 okolju
+if (!process.env.PORT) {
+  process.env.PORT = 8080;
+}
 
+streznik.listen(process.env.PORT, function() {
+  console.log("Strežnik je zagnan.");
+});
 function posredujOsnovnoStran(odgovor) {
     posredujStaticnoVsebino(odgovor, './public/fribox.html', "");
 }
