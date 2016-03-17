@@ -23,9 +23,19 @@ window.addEventListener('load', function() {
 				
 				for (var i=0; i<datoteke.length; i++) {
 					var datoteka = datoteke[i];
-					
+					// bit logika
 					var velikost = datoteka.velikost;
-					var enota = "B";
+					var enota = "";
+					if(velikost < 1024)
+						enota="B";
+					else if(velikost > 1024 && velikost <1048576 ){
+						velikost = Math.floor(velikost/1024);
+						enota="KB";
+					}
+					else{
+						velikost = Math.floor(velikost/1048576);
+						enota="MB";
+					}
 					
 					datotekeHTML.innerHTML += " \
 						<div class='datoteka senca rob'> \
