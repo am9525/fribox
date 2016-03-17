@@ -15,6 +15,11 @@ function posredujNapako404(odgovor) {
   odgovor.write('Napaka 404: Vira ni mogoče najti.');
   odgovor.end();
 }
+function posredujNapako200(odgovor) {
+  odgovor.writeHead(200, {'Content-Type': 'text/plain'});
+  odgovor.write('Datoteka izbrisana');
+  odgovor.end();
+}
 function posredujNapako500(odgovor) {
   odgovor.writeHead(500, {'Content-Type': 'text/plain'});
   odgovor.write('Napaka 500: Prislo je do napake streznika.');
@@ -49,6 +54,17 @@ streznik.listen(process.env.PORT, function() {
 function posredujOsnovnoStran(odgovor) {
     posredujStaticnoVsebino(odgovor, './public/fribox.html', "");
 }
+var izbrisiDatoteko = function(odgovor, datoteka){
+    fs.unlink(datoteka, function(napaka){
+        if(napaka){
+            //Posreduj napako
+            posredujNapako404(odgovor);
+        }
+        else{
+            posredujNapako200(odgovor);
+        }
+    })
+};
 
 function posredujStaticnoVsebino(odgovor, absolutnaPotDoDatoteke, mimeType) {
         fs.exists(absolutnaPotDoDatoteke, function(datotekaObstaja) {
