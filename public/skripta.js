@@ -8,7 +8,7 @@ window.addEventListener('load', function() {
 	var ugasniCakanje = function() {
 		document.querySelector(".loading").style.display = "none";
 	}
-	
+
 	document.querySelector("#nalozi").addEventListener("click", prizgiCakanje);
 	
 	//Pridobi seznam datotek
